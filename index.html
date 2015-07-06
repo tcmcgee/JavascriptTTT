@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color:#000080;color:white;font-size:large;">
+
+ 
+  <head>
+  <meta charset="utf-8">
+  <title>Javascript TicTacToe</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.3.4/jasmine_favicon.png">
+  <link rel="stylesheet" href="lib/jasmine-2.3.4/jasmine.css">
+
+  <script src="lib/jasmine-2.3.4/jasmine.js"></script>
+  <script src="lib/jasmine-2.3.4/jasmine-html.js"></script>
+  <script src="lib/jasmine-2.3.4/boot.js"></script>
+
+  <!-- include source files here... -->
+  <script src="src/Board.js"></script>
+
+  <!-- include spec files here... -->
+  <script src="spec/PlayerSpec.js"></script>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+  $("#play").click(function(){
+      var boardsize = $('input[name=boardsize]:checked').val();
+      var players = $('input[name=players]:checked').val();
+      $("#board").html(makeBoard(parseInt(boardsize)));
+    $('html, body').animate({
+        scrollTop: $("#reset").offset().top
+    }, 2000);
+    });
+
+  $("#reset").click(function(){
+     $("#board").html("");
+    $('html, body').animate({
+        scrollTop: $("#top").offset().top
+    }, 2000);
+  });
+  $('#board').on('mouseover', '.square', function(){
+    this.innerHTML = "X";
+  });
+
+  $('#board').on('mouseout', '.square', function(){
+    this.innerHTML = "";
+  });
+
+/*  $(".square").mouseover(function(){
+      $(".square").innerHTML='X';
+  }); 
+
+  $(".square").mouseout(function(){
+    $(".square").innerHTML=''; 
+  });*/
+});
+    
+</script>
+  </head>
+
+
+
+
+
+
+<form id="myForm">
+<h1 font-color="white" id="top"> Welcome to TicTacToe,<br> select the board size, and number of players then hit play!<br></h1>
+<br>
+<br>
+Select a board size, and number of players:<br>
+<input type="radio" name="boardsize" value="3" checked="true">3x3       
+<input type="radio" name="players" value="1" checked="true">1 Player<br>
+<input type="radio" name="boardsize" value="4">4x4             
+<input type="radio" name="players" value="2">2 Player
+<br><br>
+<br>
+
+</form>
+<button value="Play" id="play">Play</button>
+<button value="Reset" id="reset" style="margin-left:5px;">Reset</button><br><br>
+<div id="board" opacity ='0.00'>
+</div>
+<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
+</body>
+</html>
