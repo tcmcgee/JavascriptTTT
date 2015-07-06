@@ -19,32 +19,49 @@
 
   <!-- include spec files here... -->
   <script src="spec/PlayerSpec.js"></script>
+<script src="src/jquery-1.11.3.js"></script>
 
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
 
   $("#play").click(function(){
       var boardsize = $('input[name=boardsize]:checked').val();
       var players = $('input[name=players]:checked').val();
+      $("#board").fadeIn('slow');
+      $("#play").fadeOut('slow');
+      $("#reset").delay(1000).fadeIn('slow');
       $("#board").html(makeBoard(parseInt(boardsize)));
-    $('html, body').animate({
-        scrollTop: $("#reset").offset().top
-    }, 2000);
+      $('html, body').animate({
+        scrollTop: $("#play").offset().top
+      }, 2000);
+    
     });
 
   $("#reset").click(function(){
-     $("#board").html("");
+    $("#board").fadeOut();
+    $("#reset").fadeOut('slow');
+    $("#play").delay(1000).fadeIn('slow');
     $('html, body').animate({
         scrollTop: $("#top").offset().top
     }, 2000);
   });
-  $('#board').on('mouseover', '.square', function(){
-    this.innerHTML = "X";
+  $('#board').on('mouseover', '.square', function(){ 
+    if (this.innerHTML === "")
+    {
+      this.innerHTML = "X";
+    }
+  });
+ $('#board').on('click', '.square', function(){
+    $(this).css('color', 'black');
+    this.innerHTML = ' X ';
   });
 
   $('#board').on('mouseout', '.square', function(){
-    this.innerHTML = "";
+    if (this.innerHTML === "X" || this.innerHTML === "O")
+    {
+
+      this.innerHTML = "";
+    }
   });
 
 /*  $(".square").mouseover(function(){
@@ -78,8 +95,8 @@ Select a board size, and number of players:<br>
 
 </form>
 <button value="Play" id="play">Play</button>
-<button value="Reset" id="reset" style="margin-left:5px;">Reset</button><br><br>
-<div id="board" opacity ='0.00'>
+<button value="Reset" id="reset" style="margin-left:5px;display:none;">Reset</button><br><br>
+<div id="board" style = "display:none;">
 </div>
 <br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br>
