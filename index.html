@@ -44,7 +44,6 @@ $(document).ready(function(){
 
   $("#reset").click(function(){
     locked = false;
-    
     $("#board").fadeOut();
     $("#reset").fadeOut('slow');
     $("#play").delay(1000).fadeIn('slow');
@@ -73,9 +72,13 @@ $(document).ready(function(){
       move = (JSON.parse(json_return))['move'];
       console.log(move);
       squareClass = ".square" + (move - 1);
-      $(squareClass).css('color', 'black');
-      board[(move-1)] = 'O';
-      $(squareClass).text(' O ');
+      if (board[move-1] == 'nil')
+      {
+        $(squareClass).css('color', 'black');
+        board[(move-1)] = 'O';
+        $(squareClass).text(' O ');
+      }
+      
       locked = false
     });
   }
