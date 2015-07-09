@@ -23,11 +23,15 @@
 <script src="src/jquery-1.11.3.js"></script>
 
 <script>
+var board;
+var locked = false;
 $(document).ready(function(){
 
   $("#play").click(function(){
       var boardsize = $('input[name=boardsize]:checked').val();
       var players = $('input[name=players]:checked').val();
+      board = Array.apply(null, Array(parseInt(boardsize) * parseInt(boardsize))).map(String.prototype.valueOf,'nil');
+
       $("#board").fadeIn('slow');
       $("#play").fadeOut('slow');
       $("#reset").delay(1000).fadeIn('slow');
@@ -39,6 +43,8 @@ $(document).ready(function(){
     });
 
   $("#reset").click(function(){
+    locked = false;
+    
     $("#board").fadeOut();
     $("#reset").fadeOut('slow');
     $("#play").delay(1000).fadeIn('slow');
@@ -52,9 +58,28 @@ $(document).ready(function(){
       this.innerHTML = "X";
     }
   });
- $('#board').on('click', '.square', function(){
+ $('#board').on('click', '.square', function(event){
+  if (locked == false && this.innerHTML != ' X ' && this.innerHTML != ' O ' )
+  {
+    board[parseInt(event.target.id)] = 'X';
     $(this).css('color', 'black');
     this.innerHTML = ' X ';
+    locked = true
+    var json_text = JSON.stringify(board);
+    var json_return;
+    var move;
+    $.get('http://localhost:4567/get_ai_move',json_text, function(text) {
+      json_return = text;
+      move = (JSON.parse(json_return))['move'];
+      console.log(move);
+      squareClass = ".square" + (move - 1);
+      $(squareClass).css('color', 'black');
+      board[(move-1)] = 'O';
+      $(squareClass).text(' O ');
+      locked = false
+    });
+  }
+
   });
 
   $('#board').on('mouseout', '.square', function(){
@@ -65,13 +90,6 @@ $(document).ready(function(){
     }
   });
 
-/*  $(".square").mouseover(function(){
-      $(".square").innerHTML='X';
-  }); 
-
-  $(".square").mouseout(function(){
-    $(".square").innerHTML=''; 
-  });*/
 });
     
 </script>
