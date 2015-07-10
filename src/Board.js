@@ -17,7 +17,7 @@ function makeBoard(boardSize)
 function getWinner(json_text)
 {
   var json_return;
-  $.get('http://localhost:4567/get_winner',json_text, function(text) {
+  $.get('https://shielded-basin-3765.herokuapp.com/get_winner',json_text, function(text) {
 
     json_return = text;
     winner = (JSON.parse(json_return))['winner'];
@@ -26,7 +26,7 @@ function getWinner(json_text)
     if (winner != 'continue')
     {
       if (winner === "")
-        $("#display").text("Everybody wins the game! Press 'Reset' to play again!");
+        $("#display").text("Everybody wins! Press 'Reset' to play again!");
       else
         $("#display").text("'" + winner + "'s win the game! Press 'Reset' to play again!");  
       return true;  

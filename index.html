@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<body style="background-color:rgba(0,0,255,0.6); color:white; font-size:large;">
+<html style="background-color:rgba(0,0,255,0.6); color:white; font-size:large;">
+<body>
 
  
   <head>
@@ -74,7 +74,7 @@ $(document).ready(function(){
     var json_text = JSON.stringify(board);
     var json_return;
     var move;
-    $.get('http://localhost:4567/get_ai_move',json_text, function(text) {
+    $.get('https://shielded-basin-3765.herokuapp.com/get_ai_move',json_text, function(text) {
       json_return = text;
       move = (JSON.parse(json_return))['move'];
       console.log(move);
