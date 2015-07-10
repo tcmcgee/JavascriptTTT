@@ -1,3 +1,5 @@
+var locked = false;
+
 function makeBoard(boardSize)
 {
   var htm = "<table>"
@@ -11,6 +13,27 @@ function makeBoard(boardSize)
   }
   htm += "</table>"
   return htm;
+}
+function getWinner(json_text)
+{
+  var json_return;
+  $.get('http://localhost:4567/get_winner',json_text, function(text) {
+
+    json_return = text;
+    winner = (JSON.parse(json_return))['winner'];
+    console.log(winner);
+    over = false;
+    if (winner != 'continue')
+    {
+      if (winner === "")
+        $("#display").text("Everybody wins the game! Press 'Reset' to play again!");
+      else
+        $("#display").text("'" + winner + "'s win the game! Press 'Reset' to play again!");  
+      return true;  
+    }
+
+    return false;
+  });
 }
 
 

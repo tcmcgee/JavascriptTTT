@@ -36,6 +36,9 @@ $(document).ready(function(){
       $("#play").fadeOut('slow');
       $("#reset").delay(1000).fadeIn('slow');
       $("#board").html(makeBoard(parseInt(boardsize)));
+      $('#display').text("Let's Play!");
+      $("#display").fadeIn('slow');
+
       $('html, body').animate({
         scrollTop: $("#play").offset().top
       }, 2000);
@@ -44,6 +47,7 @@ $(document).ready(function(){
 
   $("#reset").click(function(){
     locked = false;
+    $("#display").fadeOut();
     $("#board").fadeOut();
     $("#reset").fadeOut('slow');
     $("#play").delay(1000).fadeIn('slow');
@@ -58,11 +62,14 @@ $(document).ready(function(){
     }
   });
  $('#board').on('click', '.square', function(event){
-  if (locked == false && this.innerHTML != ' X ' && this.innerHTML != ' O ' )
+  var text = $('#display').text();
+  if (locked == false && this.innerHTML != ' X ' && this.innerHTML != ' O ' && (text == 'Your Turn!' || (text == "Let's Play!")))
   {
     board[parseInt(event.target.id)] = 'X';
     $(this).css('color', 'black');
     this.innerHTML = ' X ';
+    $('#display').text("The computer is thinking, please wait!");
+    $('#display').fadeIn('slow');
     locked = true
     var json_text = JSON.stringify(board);
     var json_return;
@@ -72,14 +79,19 @@ $(document).ready(function(){
       move = (JSON.parse(json_return))['move'];
       console.log(move);
       squareClass = ".square" + (move - 1);
+
       if (board[move-1] == 'nil')
       {
         $(squareClass).css('color', 'black');
         board[(move-1)] = 'O';
+        $('#display').text('Your Turn!');
         $(squareClass).text(' O ');
+        json_text = JSON.stringify(board);
+        console.log(getWinner(json_text));
+        locked = false;
       }
-      
-      locked = false
+      else
+        getWinner(json_text)
     });
   }
 
@@ -118,6 +130,7 @@ Select a board size, and number of players:<br>
 </form>
 <button value="Play" id="play">Play</button>
 <button value="Reset" id="reset" style="margin-left:5px;display:none;">Reset</button><br><br>
+<h1 id="display" style="display:none;">The computer is thinking, please wait!</h1>
 <div id="board" style = "display:none;">
 </div>
 <br><br><br><br><br><br><br>
