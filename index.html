@@ -8,13 +8,6 @@
   <link rel="shortcut icon" type="image/x-icon" href="src/favicon.ico">
   <title>Javascript TicTacToe</title>
 
-  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.3.4/jasmine_favicon.png">
-  <link rel="stylesheet" href="lib/jasmine-2.3.4/jasmine.css">
-
-  <script src="lib/jasmine-2.3.4/jasmine.js"></script>
-  <script src="lib/jasmine-2.3.4/jasmine-html.js"></script>
-  <script src="lib/jasmine-2.3.4/boot.js"></script>
-
   <!-- include source files here... -->
   <script src="src/Board.js"></script>
 
@@ -26,6 +19,7 @@
 var board;
 var locked = false;
 $(document).ready(function(){
+   $.get('https://shielded-basin-3765.herokuapp.com', function(text) {});
 
   $("#play").click(function(){
       var boardsize = $('input[name=boardsize]:checked').val();
@@ -122,8 +116,8 @@ $(document).ready(function(){
 Select a board size, and number of players:<br>
 <input type="radio" name="boardsize" value="3" checked="true">3x3       
 <input type="radio" name="players" value="1" checked="true">1 Player<br>
-<input type="radio" name="boardsize" value="4">4x4             
-<input type="radio" name="players" value="2">2 Player
+<!-- <input type="radio" name="boardsize" value="4">4x4             
+<input type="radio" name="players" value="2">2 Player -->
 <br><br>
 <br>
 
